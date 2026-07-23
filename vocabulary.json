@@ -4,7 +4,14 @@
         "name": "Grundlagen",
         "words": [
             {"german": "Hallo", "italian": "Ciao"},
-            {"german": "Danke", "italian": "Grazie"}
+            {"german": "Danke", "italian": "Grazie"},
+            {"german": "Haus", "italian": "Casa"},
+            {"german": "Hund", "italian": "Cane"},
+            {"german": "Katze", "italian": "Gatto"},
+            {"german": "Baum", "italian": "Albero"},
+            {"german": "Schule", "italian": "scuola"},
+            {"german": "Freund", "italian": "amico"},
+            {"german": "Familie", "italian": "famiglia"}
         ]
     },
     {

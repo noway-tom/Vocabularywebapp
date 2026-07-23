@@ -38,20 +38,25 @@ function checkAnswer() {
         feedbackElement.textContent = "Richtig!!";
         score = score + 10;
         scoreElement.textContent = score;
-        answerInput.value = "";
-        answerInput.focus();
 
         setTimeout(function() {
             nextWord();
         }, 1000);
-        
+
     } else {
-        feedbackElement.textContent = "Falsch! " + currentWord.italian;
+        feedbackElement.textContent = "Falsch " + currentWord.italian;
         nextWord();
+
+        setTimeout(function() {
+            feedbackElement.textContent = "";
+        }, 4000)
     }
 }
 
 function nextWord () {
+    feedbackElement.textContent = "";
+    answerInput.value = "";
+    answerInput.focus();
     currentWord = getRandomWord(currentSet);
     showWord(currentWord);
 }
@@ -69,5 +74,10 @@ async function main() {
 //Events
 checkButton.addEventListener("click", checkAnswer);
 
+answerInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        checkAnswer();
+    }
+})
 //Program
 main();
