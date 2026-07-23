@@ -1,0 +1,18 @@
+[
+    {
+        "id": "basics",
+        "name": "Grundlagen",
+        "words": [
+            {"german": "Hallo", "italian": "Ciao"},
+            {"german": "Danke", "italian": "Grazie"}
+        ]
+    },
+    {
+        "id": "food",
+        "name": "Essen",
+        "words": [
+            {"german": "Brot", "italian": "Pane"},
+            {"german": "Wasser", "italian": "Acqua"}
+        ]
+    }
+]

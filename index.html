@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vokabeltraining</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="trainer">
+        <h1>Vokabeltraining</h1>
+
+        <h2 id="set-name">Vokabelset wird geladen ...</h2>
+
+        <section class="word-card">
+            <p>Übersetze dieses Wort:</p>
+
+            <p id="german-word">---</p>
+
+            <input
+                id="answer-input"
+                type="text"
+                placeholder="Italienische Übersetzung"
+                autocomplete="off"
+            >
+
+            <button id="check-button" type="button">
+                Check
+            </button>
+
+            <p id="feedback"></p>
+        </section>
+
+        <p>
+            Punkte:
+            <span id="score">0</span>
+        </p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
