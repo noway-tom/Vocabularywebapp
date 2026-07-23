@@ -4,7 +4,12 @@ const germanWordElement = document.getElementById("german-word");
 const answerInput = document.getElementById("answer-input");
 const checkButton = document.getElementById("check-button");
 const feedbackElement = document.getElementById("feedback");
-const scoreElementt = document.getElementById("score");
+const scoreElement = document.getElementById("score");
+
+//global variables
+let currentWord = null;
+let currentSet = null;
+let score = 0;
 
 // Functions
 async function loadVocabularySets() {
@@ -25,21 +30,44 @@ function showWord(word) {
     germanWordElement.textContent = word.german;
 }
 
+function checkAnswer() {
+    const userAnswer = answerInput.value.trim().toLowerCase();
+    const correctAnswer = currentWord.italian.trim().toLowerCase();
+
+    if (userAnswer === correctAnswer) {
+        feedbackElement.textContent = "Richtig!!";
+        score = score + 10;
+        scoreElement.textContent = score;
+        answerInput.value = "";
+        answerInput.focus();
+
+        setTimeout(function() {
+            nextWord();
+        }, 1000);
+        
+    } else {
+        feedbackElement.textContent = "Falsch! " + currentWord.italian;
+        nextWord();
+    }
+}
+
+function nextWord () {
+    currentWord = getRandomWord(currentSet);
+    showWord(currentWord);
+}
+
 async function main() {
     const vocabularySets = await loadVocabularySets();
-    const currentSet = vocabularySets[0];
+    currentSet = vocabularySets[0];
 
     const setNameElement = document.getElementById("set-name");
     setNameElement.textContent = currentSet.name;
     
-    const randomWord = getRandomWord(currentSet);
-    showWord(randomWord);
+    nextWord();
 }
 
 //Events
-checkButton.addEventListener("click", function() {
-    console.log(answerInput.value);
-});
+checkButton.addEventListener("click", checkAnswer);
 
 //Program
 main();
