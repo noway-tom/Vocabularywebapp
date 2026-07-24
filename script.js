@@ -72,6 +72,9 @@ function checkAnswer() {
 
     if (userAnswer === correctAnswer) {
 
+        checkButton.disabled = true;
+        answerInput.disabled = true;
+
         score = score + 10;
         scoreElement.textContent = score;
         feedbackElement.textContent = "";
@@ -80,8 +83,10 @@ function checkAnswer() {
         updateStatistics();
 
         setTimeout(function() {
+            checkButton.disabled = false;
+            answerInput.disabled = false;
             nextWord();
-        }, 1000);
+        }, 500);
     } else {
         feedbackElement.textContent = `Falsch ${currentWord.italian}`;
 
@@ -93,6 +98,7 @@ function checkAnswer() {
         setTimeout(function() {
             feedbackElement.textContent = "";
         }, 4000)
+
     }
 }
 
