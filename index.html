@@ -15,6 +15,9 @@
 
         <h2 id="set-name">Vokabelset wird geladen ...</h2>
 
+        <label for="set-select">Vokabelset:</label>
+        <select id="set-select"></select>
+
         <section class="word-card">
             <p>Übersetze dieses Wort:</p>
 
@@ -37,6 +40,12 @@
         <p>
             Punkte:
             <span id="score">0</span>
+
+            <div class="statistics">
+                <p>Richtig: <span id="correct-count">0</span></p>
+                <p>Falsch: <span id="wrong-count">0</span></p>
+                <p>Quote: <span id="accuracy">0</span>%</p>
+            </div>
         </p>
     </main>
 

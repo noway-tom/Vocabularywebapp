@@ -5,12 +5,19 @@ const answerInput = document.getElementById("answer-input");
 const checkButton = document.getElementById("check-button");
 const feedbackElement = document.getElementById("feedback");
 const scoreElement = document.getElementById("score");
+const setSelect = document.getElementById("set-select");
+const correctCountElement = document.getElementById("correct-count");
+const wrongCountElement = document.getElementById("wrong-count");
+const accuracyElement = document.getElementById("accuracy");
 
 //global variables
 let currentWord = null;
 let currentSet = null;
 let score = 0;
-let lastWordIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let lastWordIndex = -1;
+let vocabularySets = [];
 
 // Functions
 async function loadVocabularySets() {
@@ -19,6 +26,28 @@ async function loadVocabularySets() {
         throw new Error("Die JSON-Datei kann nicht geladen werden!");
     }
     return await response.json();
+}
+
+function createSetOptions(sets) {
+    setSelect.innerHTML = "";
+    sets.forEach(function(set, index) {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = set.name;
+
+        setSelect.appendChild(option);
+    });
+}
+
+function changeSet () {
+    const selectedIndex = Number(setSelect.value);
+    currentSet = vocabularySets[selectedIndex];
+
+    setNameElement.textContent = currentSet.name;
+    
+    lastWordIndex = -1;
+    nextWord();
+
 }
 
 function getRandomWord(set) {
@@ -34,7 +63,6 @@ function getRandomWord(set) {
 }
 
 function showWord(word) {
-    const germanWordElement = document.getElementById("german-word");
     germanWordElement.textContent = word.german;
 }
 
@@ -43,16 +71,23 @@ function checkAnswer() {
     const correctAnswer = currentWord.italian.trim().toLowerCase();
 
     if (userAnswer === correctAnswer) {
-        feedbackElement.textContent = "Richtig!!";
+
         score = score + 10;
         scoreElement.textContent = score;
+        feedbackElement.textContent = "";
+
+        correctCount++;
+        updateStatistics();
 
         setTimeout(function() {
             nextWord();
         }, 1000);
-
     } else {
-        feedbackElement.textContent = "Falsch " + currentWord.italian;
+        feedbackElement.textContent = `Falsch ${currentWord.italian}`;
+
+        wrongCount++;
+        updateStatistics();
+
         nextWord();
 
         setTimeout(function() {
@@ -61,22 +96,24 @@ function checkAnswer() {
     }
 }
 
+function updateStatistics() {
+    const totalAnswers = correctCount + wrongCount;
+    let accuracy = 0;
+
+    if ( totalAnswers > 0) {
+        accuracy = Math.round((correctCount / totalAnswers) * 100);
+    }
+
+    correctCountElement.textContent = correctCount;
+    wrongCountElement.textContent = wrongCount;
+    accuracyElement.textContent = accuracy;
+}
+
 function nextWord () {
-    feedbackElement.textContent = "";
     answerInput.value = "";
     answerInput.focus();
     currentWord = getRandomWord(currentSet);
     showWord(currentWord);
-}
-
-async function main() {
-    const vocabularySets = await loadVocabularySets();
-    currentSet = vocabularySets[0];
-
-    const setNameElement = document.getElementById("set-name");
-    setNameElement.textContent = currentSet.name;
-    
-    nextWord();
 }
 
 //Events
@@ -87,5 +124,18 @@ answerInput.addEventListener("keydown", function(event) {
         checkAnswer();
     }
 })
+
+setSelect.addEventListener("change", changeSet);
+
+async function main() {
+    vocabularySets = await loadVocabularySets();
+    createSetOptions(vocabularySets);
+    currentSet = vocabularySets[0];
+
+    setNameElement.textContent = currentSet.name;
+    
+    nextWord();
+}
+
 //Program
 main();
