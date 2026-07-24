@@ -10,6 +10,7 @@ const scoreElement = document.getElementById("score");
 let currentWord = null;
 let currentSet = null;
 let score = 0;
+let lastWordIndex = 0;
 
 // Functions
 async function loadVocabularySets() {
@@ -21,7 +22,14 @@ async function loadVocabularySets() {
 }
 
 function getRandomWord(set) {
-    const randomIndex = Math.floor(Math.random() * set.words.length);
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * set.words.length);
+    } while (
+        randomIndex === lastWordIndex && set.words.length > 1
+    );
+
+    lastWordIndex = randomIndex;
     return set.words[randomIndex];
 }
 
