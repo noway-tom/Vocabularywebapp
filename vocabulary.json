@@ -19,7 +19,8 @@
         "name": "Essen",
         "words": [
             {"german": "Brot", "italian": "Pane"},
-            {"german": "Wasser", "italian": "Acqua"}
+            {"german": "Wasser", "italian": "Acqua"},
+            {"german": "Nudeln", "italian": "Pasta"}
         ]
     }
 ]
